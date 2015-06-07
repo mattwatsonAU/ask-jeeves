@@ -15,6 +15,42 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 	int inlinks[npages];
 	node* inode = list;
 
+	//calculate initial P value
+	double init = 1 / (double)npages;
+	//printf("%f\n", init);
+
+	//create P value arrays
+	double curr[npages];
+	//double prev[npages];
+
+	//fill the current p value array with the intial p value 'init'
+	for(int i=0; i<npages; i++)
+	{
+		curr[i] = init;
+	}
+
+	//double c = (1 - dampener)/npages;
+	//double e2 = EPSILON * EPSILON; 
+	/* Initialise convergance as 1 so while loop begins */
+	//double convergance = 1;	
+	//double pprev;
+
+	// while (convergance > e2) 
+	// {
+	// 	// copy current P values into previous as current will be updated and overwritten upon iteration
+	// 	for (int i = 0; i < npages; i++)
+	// 	{
+	// 		prev[i] = curr[i];
+	// 	}
+	// }	
+
+
+
+
+
+
+
+	//convert the linked list to arrays for performance boost
 	for (int i=0; i < npages; i++)
 	{
 		outlink_count[i] = inode->page->noutlinks;
@@ -31,7 +67,7 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 			inlinks[i] = inlink->page->index;
 			printf("%s", "Inlinks: ");
 			printf("%d\n", inlinks[i]);
-			i++; 
+			i++;
 		}
 
 		inode = inode->next;
@@ -55,6 +91,9 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 		- implement any other necessary functions
 		- implement any other useful data structures
 	*/
+
+	//print the result
+	//printf("%s %.4lf\n");
 }
 
 /*
