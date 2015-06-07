@@ -10,11 +10,6 @@
 
 void pagerank(node* list, int npages, int nedges, int nthreads, double dampener) 
 {
-	int outlink_count[npages];
-	//int inlink_count[npages];
-	int inlinks[npages];
-	node* inode = list;
-
 	//calculate initial P value
 	double init = 1 / (double)npages;
 	//printf("%f\n", init);
