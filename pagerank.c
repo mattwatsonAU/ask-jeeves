@@ -10,7 +10,6 @@
 
 void pagerank(node* list, int npages, int nedges, int nthreads, double dampener) 
 {
-	node* inode = list;
 
 	//calculate initial P value
 	double init = 1 / (double)npages;
@@ -18,7 +17,7 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 
 	//create P value arrays
 	double curr[npages];
-	//double prev[npages];
+	double prev[npages];
 
 	//fill the current p value array with the intial p value 'init'
 	for(int i=0; i<npages; i++)
@@ -26,11 +25,11 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 		curr[i] = init;
 	}
 
-	double c = (1 - dampener)/npages;
+	//double c = (1 - dampener)/npages;
 	double e2 = EPSILON * EPSILON; 
 	/* Initialise convergance as 1 so while loop begins */
 	double convergance = 1;	
-	double pprev;
+	//double pprev;
 
 	while (convergance > e2) 
 	{
