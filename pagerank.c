@@ -10,6 +10,11 @@
 
 void pagerank(node* list, int npages, int nedges, int nthreads, double dampener) 
 {
+	int outlink_count[npages];
+	//int inlink_count[npages];
+	int inlinks[npages];
+	node* inode = list;
+
 	//calculate initial P value
 	double init = 1 / (double)npages;
 	//printf("%f\n", init);
@@ -49,8 +54,6 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 	for (int i=0; i < npages; i++)
 	{
 		outlink_count[i] = inode->page->noutlinks;
-		printf("%s", "Outlink count: ");
-		printf("%d\n", outlink_count[i]);
 	}
 
 	inode = list;
@@ -60,25 +63,23 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 		for (node *inlink = inode->page->inlinks; inlink != NULL; inlink = inlink->next) 
 		{
 			inlinks[i] = inlink->page->index;
-			printf("%s", "Inlinks: ");
-			printf("%d\n", inlinks[i]);
-			i++;
+			i++; 
 		}
 
 		inode = inode->next;
 	}
 
-	// for (int i = 0; i<nedges; i++)
-	// {
-	// 	printf("%s", "Inlinks: ");
-	// 	printf("%d\n", inlinks[i]);
-	// }
+	for (int i = 0; i<nedges; i++)
+	{
+		printf("%s", "Inlinks: ");
+		printf("%d\n", inlinks[i]);
+	}
 
-	// for (int i=0; i < npages; i++)
-	// {
-	// 	printf("%s", "Outlink count: ");
-	// 	printf("%d\n", outlink_count[i]);
-	// }
+	for (int i=0; i < npages; i++)
+	{
+		printf("%s", "Outlink count: ");
+		printf("%d\n", outlink_count[i]);
+	}
 
 	/*
 		TODO
