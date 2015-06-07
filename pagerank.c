@@ -10,10 +10,10 @@
 
 void pagerank(node* list, int npages, int nedges, int nthreads, double dampener) 
 {
-
+	node* inode = list;
 	//calculate initial P value
 	double init = 1 / (double)npages;
-	//printf("%f\n", init);
+	printf("%f\n", init);
 
 	//create P value arrays
 	double curr[npages];
@@ -25,11 +25,11 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 		curr[i] = init;
 	}
 
-	//double c = (1 - dampener)/npages;
+	double c = (1 - dampener)/npages;
 	double e2 = EPSILON * EPSILON; 
 	/* Initialise convergance as 1 so while loop begins */
 	double convergance = 1;	
-	//double pprev;
+	double pprev;
 
 	while (convergance > e2) 
 	{
@@ -38,7 +38,37 @@ void pagerank(node* list, int npages, int nedges, int nthreads, double dampener)
 		{
 			prev[i] = curr[i];
 		}
-	}	
+
+		//go through each page
+		for (node *inlink = inode->page->inlinks; inlink != NULL; inlink = inlink->next)
+		{
+			pprev=0.0;
+
+			//If there are inlinks
+			if(inlink->page->inlinks != NULL)
+			{
+				for(node* in=inlink->page->inlinks; in != NULL; in = in->next)
+				{
+					//Calculate new P value
+					pprev += prev[inlink->page->index] / in->page->noutlinks;
+				}
+			}
+			//Save it to the current array
+			curr[inlink->page->index] = c + dampener*pprev;
+		}
+		//Calculate epsilon
+		convergance = 0.0;
+		for (int i = 0; i < npages; i++)
+		{
+			double difference = curr[i] - prev[i];
+			convergance += (difference*difference);
+		}
+	}
+	//print the result
+	for (node *inlink = inode->page->inlinks; inlink != NULL; inlink = inlink->next)
+	{
+		printf("%s %.4lf\n", inlink->page->name, curr[inlink->page->index]);
+	}
 
 
 	/*
